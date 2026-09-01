@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://dn5874nswio6e"]
+
+[ext_resource type="Script" uid="uid://d2fpebjy500ow" path="res://scenes/gameplay/player/player.gd" id="1_qgw2i"]
+[ext_resource type="Texture2D" uid="uid://drp6lt75iaav0" path="res://scenes/gameplay/player/player_head.png" id="2_77456"]
+[ext_resource type="Texture2D" uid="uid://fhmlxaiukrns" path="res://scenes/gameplay/player/player_body.png" id="3_fbmmh"]
+[ext_resource type="Texture2D" uid="uid://csnc86l0q72vi" path="res://scenes/gameplay/player/player_shadow.png" id="4_fbmmh"]
+[ext_resource type="Texture2D" uid="uid://buhg3q7rmae4e" path="res://scenes/gameplay/player/player_hand.png" id="5_nwi3p"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ckt6m"]
+radius = 3.0
+height = 14.0
+
+[node name="Player" type="CharacterBody2D" unique_id=1933253685]
+motion_mode = 1
+script = ExtResource("1_qgw2i")
+
+[node name="Sprites" type="Node2D" parent="." unique_id=1863215195]
+position = Vector2(0, -8)
+
+[node name="ShadowSprite2D" type="Sprite2D" parent="Sprites" unique_id=2085745119]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.7529412)
+z_index = -2
+texture = ExtResource("4_fbmmh")
+offset = Vector2(0, 9)
+
+[node name="HeadSprite2D" type="Sprite2D" parent="Sprites" unique_id=1920256826]
+unique_name_in_owner = true
+texture = ExtResource("2_77456")
+offset = Vector2(0, -6)
+
+[node name="BodySprite2D" type="Sprite2D" parent="Sprites" unique_id=1688961570]
+unique_name_in_owner = true
+texture = ExtResource("3_fbmmh")
+offset = Vector2(0, 4)
+
+[node name="HandPivot" type="Node2D" parent="." unique_id=73260820]
+unique_name_in_owner = true
+position = Vector2(0, -5)
+
+[node name="HandSprite2D" type="Sprite2D" parent="HandPivot" unique_id=570110035]
+unique_name_in_owner = true
+y_sort_enabled = true
+position = Vector2(12, 0)
+texture = ExtResource("5_nwi3p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=983733179]
+position = Vector2(0, -5)
+shape = SubResource("CapsuleShape2D_ckt6m")

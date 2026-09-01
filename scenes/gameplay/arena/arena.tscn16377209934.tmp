@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://bcjhqbewjwetq"]
+
+[ext_resource type="Script" uid="uid://cxlcvagbw40h5" path="res://scenes/gameplay/arena/arena.gd" id="1_sb4q5"]
+[ext_resource type="PackedScene" uid="uid://dn5874nswio6e" path="res://scenes/gameplay/player/player.tscn" id="2_ytfij"]
+
+[node name="Arena" type="Node2D" unique_id=774678679]
+script = ExtResource("1_sb4q5")
+
+[node name="BackgroundLayer" type="CanvasLayer" parent="." unique_id=1407108150]
+layer = -1
+
+[node name="Background" type="ColorRect" parent="BackgroundLayer" unique_id=87034202]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.27450982, 0.27450982, 0.8, 1)
+
+[node name="Bounds" type="Node2D" parent="." unique_id=206000007]
+unique_name_in_owner = true
+position = Vector2(320, 180)
+
+[node name="BoundsDecorationOutlinePolygon" type="Polygon2D" parent="Bounds" unique_id=153891818]
+unique_name_in_owner = true
+color = Color(0.45490196, 0.45490196, 0.9098039, 1)
+
+[node name="BoundsDecorationPolygon" type="Polygon2D" parent="Bounds" unique_id=193293179]
+unique_name_in_owner = true
+color = Color(0.72156864, 0.72156864, 0.9372549, 1)
+
+[node name="BoundsOutlinePolygon" type="Polygon2D" parent="Bounds" unique_id=2079204944]
+unique_name_in_owner = true
+
+[node name="BoundsPolygon" type="Polygon2D" parent="Bounds" unique_id=916310949]
+unique_name_in_owner = true
+color = Color(0.27450982, 0.27450982, 0.8, 1)
+
+[node name="Player" parent="." unique_id=1933253685 instance=ExtResource("2_ytfij")]
+position = Vector2(320, 180)

@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://1eada8ojm0yb"]
+
+[ext_resource type="Script" uid="uid://cula8p4h23yno" path="res://scenes/main/main.gd" id="1_hyk8p"]
+[ext_resource type="PackedScene" uid="uid://bcjhqbewjwetq" path="res://scenes/gameplay/arena/arena.tscn" id="2_iuonh"]
+[ext_resource type="PackedScene" uid="uid://b5dpkbhal40h4" path="res://scenes/common/cursor/cursor.tscn" id="3_k2fmo"]
+
+[node name="Main" type="Node" unique_id=943556833]
+script = ExtResource("1_hyk8p")
+screen_scenes = Dictionary[int, PackedScene]({
+2: ExtResource("2_iuonh")
+})
+initial_screen = 2
+
+[node name="Gameplay" type="Node2D" parent="." unique_id=2035363311]
+unique_name_in_owner = true
+
+[node name="UI" type="Control" parent="." unique_id=2087362957]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Overlays" type="CanvasLayer" parent="." unique_id=1329524043]
+unique_name_in_owner = true
+
+[node name="CursorLayer" type="CanvasLayer" parent="." unique_id=2015553951]
+layer = 10
+
+[node name="Cursor" parent="CursorLayer" unique_id=771340060 instance=ExtResource("3_k2fmo")]

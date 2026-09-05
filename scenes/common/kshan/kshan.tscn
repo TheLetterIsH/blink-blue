@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cvhq13rxkq6lj"]
+
+[ext_resource type="Script" uid="uid://dur6pg1721r8c" path="res://scenes/common/kshan/kshan.gd" id="1_t24cx"]
+
+[node name="Kshan" type="Node" unique_id=174597750]
+script = ExtResource("1_t24cx")

@@ -6,11 +6,50 @@
 [ext_resource type="Texture2D" uid="uid://csnc86l0q72vi" path="res://scenes/gameplay/player/player_shadow.png" id="4_fbmmh"]
 [ext_resource type="Texture2D" uid="uid://buhg3q7rmae4e" path="res://scenes/gameplay/player/player_hand.png" id="5_nwi3p"]
 
+[sub_resource type="Shader" id="Shader_stmte"]
+code = "shader_type canvas_item;
+
+// Normalized direction along which the sprite squashes.
+// Vector2(0,0) means \"no deformation\".
+uniform vec2 direction = vec2(0.0, 0.0);
+
+// 0 = no deformation, 1 = max deformation.
+uniform float strength : hint_range(0.0, 1.0) = 0.0;
+
+// How much scale_parallel/perpendicular shift per unit of strength.
+// Clamped so scale_parallel can never hit 0 or go negative.
+uniform float squash_amount : hint_range(0.0, 0.99) = 0.5;
+
+void vertex() {
+	float dirLen = length(direction);
+	
+	if (dirLen > 0.0001 && strength > 0.0001) {
+		vec2 dir = direction / dirLen; // normalize, but avoids NaN on zero vec
+		vec2 perp = vec2(-dir.y, dir.x);
+		
+		float dot_parallel = dot(VERTEX.xy, dir);
+		float dot_perpendicular = dot(VERTEX.xy, perp);
+		
+		// Symmetric, linked scaling — same as your original, but bounded.
+		float amount = clamp(squash_amount * strength, 0.0, 0.99);
+		float scale_parallel = 1.0 - amount;
+		float scale_perpendicular = 1.0 + amount;
+		
+		VERTEX.xy = dot_parallel * dir * scale_parallel + dot_perpendicular * perp * scale_perpendicular;
+    }
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_stmte"]
+shader = SubResource("Shader_stmte")
+shader_parameter/direction = Vector2(0, 1)
+shader_parameter/strength = 0.0
+shader_parameter/squash_amount = 0.5
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ckt6m"]
 radius = 3.0
 height = 14.0
 
-[node name="Player" type="CharacterBody2D" unique_id=1933253685]
+[node name="Player" type="CharacterBody2D" unique_id=1933253685 groups=["player"]]
 motion_mode = 1
 script = ExtResource("1_qgw2i")
 
@@ -26,6 +65,7 @@ offset = Vector2(0, 9)
 
 [node name="HeadSprite2D" type="Sprite2D" parent="Sprites" unique_id=1920256826]
 unique_name_in_owner = true
+material = SubResource("ShaderMaterial_stmte")
 texture = ExtResource("2_77456")
 offset = Vector2(0, -6)
 

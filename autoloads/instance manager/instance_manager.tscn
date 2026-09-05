@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bemjhy1w3gcmg"]
+
+[ext_resource type="Script" uid="uid://bj8k4je3x6aed" path="res://autoloads/instance manager/instance_manager.gd" id="1_pkppk"]
+
+[node name="InstanceManager" type="Node" unique_id=1117972960]
+script = ExtResource("1_pkppk")

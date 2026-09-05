@@ -1,9 +1,14 @@
 [gd_scene format=3 uid="uid://bcjhqbewjwetq"]
 
 [ext_resource type="Script" uid="uid://cxlcvagbw40h5" path="res://scenes/gameplay/arena/arena.gd" id="1_sb4q5"]
+[ext_resource type="PackedScene" uid="uid://blnfqjlxufuhw" path="res://scenes/gameplay/blink controller/blink_controller.tscn" id="2_gval7"]
 [ext_resource type="PackedScene" uid="uid://dn5874nswio6e" path="res://scenes/gameplay/player/player.tscn" id="2_ytfij"]
+[ext_resource type="Script" uid="uid://dpfxucl7dgy3t" path="res://scenes/gameplay/arena/hud/hud.gd" id="4_3cf1b"]
+[ext_resource type="Texture2D" uid="uid://cgicjaa276c1l" path="res://scenes/gameplay/arena/hud/blink_bar_under.png" id="4_ck51g"]
+[ext_resource type="Texture2D" uid="uid://18ortdry28ku" path="res://scenes/gameplay/arena/hud/blink_bar_over.png" id="5_3cf1b"]
+[ext_resource type="Texture2D" uid="uid://cd7qiyrysl6av" path="res://scenes/gameplay/arena/hud/blink_bar_progress.png" id="5_olurb"]
 
-[node name="Arena" type="Node2D" unique_id=774678679]
+[node name="Arena" type="Node2D" unique_id=774678679 groups=["arena"]]
 script = ExtResource("1_sb4q5")
 
 [node name="BackgroundLayer" type="CanvasLayer" parent="." unique_id=1407108150]
@@ -16,6 +21,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.27450982, 0.27450982, 0.8, 1)
+
+[node name="BlinkController" parent="." unique_id=2130384379 instance=ExtResource("2_gval7")]
 
 [node name="Bounds" type="Node2D" parent="." unique_id=206000007]
 unique_name_in_owner = true
@@ -38,3 +45,41 @@ color = Color(0.27450982, 0.27450982, 0.8, 1)
 
 [node name="Player" parent="." unique_id=1933253685 instance=ExtResource("2_ytfij")]
 position = Vector2(320, 180)
+
+[node name="HUD" type="Control" parent="." unique_id=1595926420 groups=["hud"]]
+unique_name_in_owner = true
+z_index = -10
+custom_minimum_size = Vector2(640, 360)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 640.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_3cf1b")
+
+[node name="BlinkBar" type="TextureProgressBar" parent="HUD" unique_id=2028425565]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -184.0
+offset_top = -184.0
+offset_right = 184.0
+offset_bottom = 184.0
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 1.0
+step = 0.01
+value = 0.35
+fill_mode = 8
+radial_initial_angle = 90.0
+radial_fill_degrees = 40.0
+texture_under = ExtResource("4_ck51g")
+texture_over = ExtResource("5_3cf1b")
+texture_progress = ExtResource("5_olurb")

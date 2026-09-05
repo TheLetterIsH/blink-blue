@@ -42,18 +42,12 @@ enum Overlay {
 @export var screen_scenes: Dictionary[Screen, PackedScene]
 ## The screen that is loaded automatically when the game starts.
 @export var initial_screen: Screen
+
 @export_group("Overlay")
 ## Maps each [enum Overlay] enum value to the [PackedScene] that should be instantiated for it.
 @export var overlay_scenes: Dictionary[Overlay, PackedScene]
 ## Maps each [enum Overlay] enum value to whether pushing it should also request a game pause.
 @export var overlay_pauses_screen: Dictionary[Overlay, bool]
-
-## The node that holds a gameplay screen
-@onready var _gameplay: Node2D = %Gameplay
-## The node that holds a UI screen
-@onready var _ui: Control = %UI
-## The node that holds overlays
-@onready var _overlays: CanvasLayer = %Overlays
 
 ## The currently active screen.
 var _screen: Screen = Screen.NONE
@@ -64,6 +58,13 @@ var _overlay_stack: Array[Dictionary] = []
 
 ## List of objects that have an active pause request. The game stays paused while this is non-empty.
 var _pause_requesters: Array = []
+
+## The node that holds a gameplay screen
+@onready var _gameplay: Node2D = %Gameplay
+## The node that holds a UI screen
+@onready var _ui: Control = %UI
+## The node that holds overlays
+@onready var _overlays: CanvasLayer = %Overlays
 
 
 func _ready() -> void:

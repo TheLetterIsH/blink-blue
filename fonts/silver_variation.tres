@@ -1,0 +1,7 @@
+[gd_resource type="FontVariation" format=3 uid="uid://dom1tp18byjpw"]
+
+[ext_resource type="FontFile" uid="uid://bu5b3sq7e1skk" path="res://fonts/silver.ttf" id="1_glirp"]
+
+[resource]
+base_font = ExtResource("1_glirp")
+baseline_offset = 0.15

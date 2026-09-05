@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://blnfqjlxufuhw"]
+
+[ext_resource type="Script" uid="uid://bp2rxqxsshnwu" path="res://scenes/gameplay/blink controller/blink_controller.gd" id="1_8l2br"]
+[ext_resource type="PackedScene" uid="uid://cvhq13rxkq6lj" path="res://scenes/common/kshan/kshan.tscn" id="1_e2mmn"]
+
+[node name="BlinkController" type="Node" unique_id=2130384379]
+script = ExtResource("1_8l2br")
+
+[node name="Kshan" parent="." unique_id=174597750 instance=ExtResource("1_e2mmn")]

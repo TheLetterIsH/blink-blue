@@ -4,7 +4,7 @@ extends CharacterBody2D
 # State Machine
 enum State {
 	NONE,
-	NORMAL,
+	ACTIVE,
 	BLINK,
 }
 
@@ -18,7 +18,6 @@ enum State {
 
 @export_group("Aim")
 @export var aim_speed: float = 20.0
-var _aim_angle_lagged: float = 0.0
 
 @export_group("Feel")
 @export var max_tilt: float = PI * 0.15
@@ -27,12 +26,17 @@ var _aim_angle_lagged: float = 0.0
 @export_group("Debug")
 @export var debug_draw_aim_direction: bool = false
 
+# Movement
+var _move_direction: Vector2 = Vector2.ZERO
+
+# Aim
+var _aim_direction: Vector2 = Vector2.ZERO
+var _aim_angle_lagged: float = 0.0
+
 # Arena
 var _arena_center := G.viewport_center
 var _arena_player_bounds_radius := G.arena_player_bounds_radius
 
-@onready var _sprites: Node2D = $Sprites
-@onready var _shadow_sprite: Sprite2D = %ShadowSprite2D
 @onready var _head_sprite: Sprite2D = %HeadSprite2D
 @onready var _body_sprite: Sprite2D = %BodySprite2D
 @onready var _hand_sprite: Sprite2D = %HandSprite2D
@@ -40,16 +44,15 @@ var _arena_player_bounds_radius := G.arena_player_bounds_radius
 
 
 func _ready() -> void:
-	_change_state(State.NORMAL)
-	
 	_connect_signals()
+	_change_state(State.ACTIVE)
 
 
 func _connect_signals() -> void:
 	pass
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if debug_draw_aim_direction:
 		queue_redraw()
 
@@ -60,8 +63,8 @@ func _physics_process(delta: float) -> void:
 
 func _process_state(delta: float) -> void:
 	match state:
-		State.NORMAL:
-			_normal_state(delta)
+		State.ACTIVE:
+			_active_state(delta)
 
 
 func _change_state(next_state: State) -> void:
@@ -71,15 +74,15 @@ func _change_state(next_state: State) -> void:
 	state = next_state
 	
 	match state:
-		State.NORMAL:
-			_changed_to_normal_state()
+		State.ACTIVE:
+			_changed_to_active_state()
 
 
-func _changed_to_normal_state() -> void:
+func _changed_to_active_state() -> void:
 	pass
 
 
-func _normal_state(delta: float) -> void:
+func _active_state(delta: float) -> void:
 	# Movement
 	var move_direction := _get_move_direction()
 	
@@ -111,14 +114,19 @@ func _normal_state(delta: float) -> void:
 
 
 func _get_move_direction() -> Vector2:
-	var move_direction := Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
-	return move_direction
+	_move_direction = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
+	return _move_direction
 
 
 func _get_aim_direction() -> Vector2:
-	var mouse_position := get_global_mouse_position()
-	var aim_direction := global_position.direction_to(mouse_position)
-	return aim_direction
+	if InputManager.input_type == InputManager.InputType.KEYBOARD_AND_MOUSE:
+		var mouse_position := get_global_mouse_position()
+		_aim_direction = global_position.direction_to(mouse_position)
+	elif InputManager.input_type == InputManager.InputType.CONTROLLER:
+		var d = Input.get_vector(&"shoot_left", &"shoot_right", &"shoot_up", &"shoot_down")
+		if d.length() > 0.01:
+			_aim_direction = d
+	return _aim_direction
 
 
 func _draw() -> void:

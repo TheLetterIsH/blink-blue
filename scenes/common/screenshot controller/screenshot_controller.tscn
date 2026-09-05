@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bk8gphoy8wo3c"]
+
+[ext_resource type="Script" uid="uid://b0bu5e58vdt71" path="res://scenes/common/screenshot controller/screenshot_controller.gd" id="1_nwlg1"]
+
+[node name="ScreenshotController" type="Node" unique_id=729273385]
+script = ExtResource("1_nwlg1")
